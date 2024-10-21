@@ -110,7 +110,7 @@ withDefer(cleanUp):
 var myPtr1 = conjure int
 myPtr1[] = 1
 
-# let myPtr2 = myPtr1 # don't do this!
+# let myPtr2 = myPtr1     # <- don't do this!
 let myPtr2 = move(myPtr1) # <- do this, instead
 assert myPtr1.isNone
 
