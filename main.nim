@@ -1,4 +1,4 @@
-import memutils, options, strformat
+import memutils, opt, strformat
 
 ### simple, "safe" pointers
 var myPtr = conjure int
@@ -13,9 +13,7 @@ banish myPtr # no issues with double free
 # a null pointer.
 assert myPtr.isNone
 
-try: myPtr[] = 9
-# null pointers cannot be dereferenced
-except: assert getCurrentException() of UnpackDefect
+# myPtr[] = 9 # <- aborts with an error message
 
 
 

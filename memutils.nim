@@ -1,4 +1,4 @@
-import options
+import opt
 
 ### array pointers
 type ArrayPtr*[T] = object
