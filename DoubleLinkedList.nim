@@ -1,19 +1,17 @@
 # SafePtr only allows you to have one reference to each memory address,
-# so you cannot use it to implement cyclical data structures, such as
-# Doubly-linked lists.
+# so you can't use for cyclical data structures, like Doubly-linked lists.
 
-# The good news is that these data structures *can* clean up after
-# themselves, be self-contained, encapsulate pointers to allocated memory so
-# callers can't access them, and avoid being "copied," so as to prevent
-# dangling pointers, nil access and double-free errors.
+# The good news is that these data structures *can* hide their pointers to
+# prevent callers from messing with them, clean up after themselves,
+# and avoid being "copied."
 
 # This example also introduces the "result reference" pattern --
-# the practice of 1) returning a boolean success or failure value, and
-# 2) passing in a reference to a variable that should receive the function's
-# output, rather than 1) throwing an exception on failure and 2) returning
-# the function's output. This pattern serves as an alternative to Nim's
-# memory-unsafe exceptions by forcing the user to do something with the
-# success/failure value of each function call.
+# the practice of 1) returning a boolean success or failure value rather
+# than throwing an exception, and 2) passing in a reference to a variable
+# that should receive the function's output, rather than returning it.
+# This pattern serves as an alternative to Nim's memory-unsafe exceptions,
+# by forcing the caller to do something with the success/failure value
+# returned by each function.
 
 type Node = object
   next: ptr Node = nil
@@ -28,7 +26,7 @@ proc `=copy`* (dest: var DoubleLinkedList, source: DoubleLinkedList) =
   assert false,
     "A DoubleLinkedList cannot be copied; consider moving it instead."
 
-proc deleteFirst (this: var DoubleLinkedList) =
+proc deleteFirstItem (this: var DoubleLinkedList) =
   if this.len == 0 or this.firstNode == nil: return
 
   let node = this.firstNode
@@ -45,7 +43,7 @@ proc deleteFirst (this: var DoubleLinkedList) =
 
 proc `=destroy` (this: var DoubleLinkedList) =
   while this.len > 0 and this.firstNode != nil:
-    this.deleteFirst()
+    this.deleteFirstItem()
 
 proc nodeAt (this: DoubleLinkedList, index: 0 .. high(int)): ptr Node =
   if this.firstNode == nil or index >= this.len:
