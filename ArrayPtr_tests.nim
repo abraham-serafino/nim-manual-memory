@@ -54,3 +54,5 @@ suite "ArrayPtr":
 
     expect AssertionDefect:
       myPtr[4] = 1
+
+echo ""

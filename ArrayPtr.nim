@@ -37,9 +37,3 @@ proc `[]=`*[T] (this: ArrayPtr[T], index: 0 .. high(int), value: T) =
   assert this.len > index, "Array index out of bounds."
 
   this.data[index] = value
-
-# template `[]`* (this: untyped, index: 0 .. high(int), prop: untyped):
-#     untyped =
-#
-#   assert this.data != nil, "Nil pointer access."
-#   this.data[index].prop

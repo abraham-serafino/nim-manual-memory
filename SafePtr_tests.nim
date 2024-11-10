@@ -41,3 +41,5 @@ suite "SafePtr":
     var myPtr = conjure TestObj
     myPtr->testValue = 5
     check myPtr[].testValue == 5
+
+echo ""
